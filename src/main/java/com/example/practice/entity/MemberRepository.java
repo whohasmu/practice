@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 public interface MemberRepository extends JpaRepository< Member, Long> {
 
-    static final String UPDATE_MEMBER_LAST_LOGIN = "UPDATE Member SET LAST_LOGIN_TIME = : lastLoginTime WHERE EMAIL = : email";
+    static final String UPDATE_MEMBER_LAST_LOGIN = "UPDATE Member SET LAST_LOGIN_TIME=:lastLoginTime WHERE EMAIL=:email";
 
     @Transactional
     @Modifying

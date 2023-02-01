@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class MainController {
 
     @GetMapping("/")
@@ -15,11 +15,8 @@ public class MainController {
                                @RequestParam(value = "exception", required = false) String exception) {
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
-        return "/main";
+        return "main";
     }
 
-    @GetMapping("/api/hello")
-    public String testApi(){
-        return "test String";
-    }
+
 }
