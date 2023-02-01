@@ -10,6 +10,8 @@ repositories {
 
 dependencies {
 
+    // jsp
+    implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
 
     // DB - mysql
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.12'
@@ -77,3 +79,5 @@ task copyReactBuildFiles(type: Copy) {
     from "$frontendDir/build"
     into "$projectDir/src/main/resources/static"
 }
+
+

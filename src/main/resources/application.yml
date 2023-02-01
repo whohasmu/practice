@@ -9,3 +9,9 @@ spring :
       url : jdbc:mysql://localhost:3306/yh
       username : user
       password : 1234
+
+
+  mvc:
+    view:
+      prefix: /WEB-INF/view/
+      suffix: .jsp

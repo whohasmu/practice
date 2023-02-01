@@ -35,10 +35,12 @@
       </div>
     </div>
   </div>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script th:inline="javascript">
-    let frm = $("#frm");
+
 
     function fnSubmit() {
+      let frm = $("#frm");
       frm.submit();
     }
 
@@ -47,12 +49,12 @@
         if (e.key == "Enter") fnSubmit();
       });
 
-      frm.validate({
-        submitHandler: function(form) {
-          // Submit Action..
-          form.submit();
-        }
-      });
+      // frm.validate({
+      //   submitHandler: function(form) {
+      //     // Submit Action..
+      //     form.submit();
+      //   }
+      // });
     });
   </script>
 </th:block>
