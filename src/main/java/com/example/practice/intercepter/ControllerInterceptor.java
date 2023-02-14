@@ -20,11 +20,16 @@ public class ControllerInterceptor implements HandlerInterceptor {
 		String path = request.getServletPath();
 
 		// logging
+		log.info("\n");
 		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ controller interceptor preHandle START");
 		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ path : {}", path);
+//		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ request : {}", request.getParameterMap().toString());
+//		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ response : {}", response.toString());
 		if (handler instanceof HandlerMethod) {
 			log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ handler : {}", (HandlerMethod) handler);
 		}
+		log.info("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ controller interceptor preHandle END");
+		log.info("\n");
 
 		return true;
 	}

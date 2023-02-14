@@ -1,17 +1,23 @@
 package com.example.practice.service;
 
-import com.example.practice.VO.TestVO;
+import com.example.practice.DTO.TestVO;
+import com.example.practice.DTO.TokenInfo;
+import com.example.practice.config.JwtTokenProvider;
 import com.example.practice.entity.Member;
 import com.example.practice.entity.MemberRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.transaction.annotation.Transactional;
 
+
+import javax.validation.Valid;
 
 import static java.util.Objects.isNull;
 
@@ -21,6 +27,8 @@ import static java.util.Objects.isNull;
 public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -34,9 +42,25 @@ public class MemberService implements UserDetailsService {
         return member;
     }
 
-    public String testMethod(@Validated TestVO testVO) throws Exception{
+    @Transactional
+    public TokenInfo login(String username, String password) {
+        // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
+        // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+
+        // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
+        // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+        // 3. 인증 정보를 기반으로 JWT 토큰 생성
+        TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+
+        return tokenInfo;
+    }
+
+    public TestVO testMethod(@Valid TestVO testVO) throws Exception{
 
 
-        return "Test String";
+        return testVO;
     }
 }

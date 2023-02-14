@@ -13,8 +13,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -33,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthFailureHandler authFailureHandler;
 
+    private final JwtTokenProvider jwtTokenProvider;
+
     @Bean
     public BCryptPasswordEncoder encryptPassword() {
         return new BCryptPasswordEncoder();
@@ -46,6 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        //Session
+        /*
         http.csrf().disable()
                     .authorizeRequests()
                     .antMatchers("/", "/login/**", "/js/**", "/css/**", "/image/**").permitAll() // 해당 경로들은 접근을 허용
@@ -74,10 +80,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .alwaysRemember(false) // 항상 기억할 것인지 여부
                     .tokenValiditySeconds(600) // in seconds, 10분 유지
                     .rememberMeParameter("remember-me")
-                // 403 exception handling
-                .and().exceptionHandling().accessDeniedPage("/login")
                 // 401
-                .and().exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+                .and().exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                // 403 exception handling
+                .and().exceptionHandling().accessDeniedPage("/login");
+
+         */
+
+
+        //JWT
+        http
+                .httpBasic().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                    .authorizeRequests()
+//                    .antMatchers("/", "/login/**", "/js/**", "/css/**", "/image/**").permitAll()
+                    .antMatchers("/**").permitAll()
+//                    .anyRequest().authenticated()
+                .and().exceptionHandling().accessDeniedPage("/login")
+                .and().exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+
     }
 
 

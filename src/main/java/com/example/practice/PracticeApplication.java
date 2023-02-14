@@ -1,5 +1,6 @@
 package com.example.practice;
 
+import com.example.practice.DTO.TestVO;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,6 +11,7 @@ public class PracticeApplication {
     public static void main(String[] args) {
         SpringApplication.run(PracticeApplication.class, args);
 //        test();
+
     }
 
     public void test(){
@@ -17,5 +19,6 @@ public class PracticeApplication {
         System.out.println("new BCryptPasswordEncoder : " + temp);
 
     }
+
 
 }

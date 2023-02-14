@@ -9,13 +9,22 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class MainController {
 
-    @GetMapping("/")
-    public String getLoginPage(Model model,
+    @GetMapping("/main")
+    public String getMainPage(Model model,
                                @RequestParam(value = "error", required = false) String error,
                                @RequestParam(value = "exception", required = false) String exception) {
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
         return "main";
+    }
+
+    @GetMapping("/")
+    public String getIndexPage(Model model,
+                              @RequestParam(value = "error", required = false) String error,
+                              @RequestParam(value = "exception", required = false) String exception) {
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
+        return "vue/index";
     }
 
 

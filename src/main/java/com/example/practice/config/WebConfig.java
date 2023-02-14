@@ -13,21 +13,22 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    @Bean
-    MappingJackson2JsonView jsonView() {
-        return new MappingJackson2JsonView();
-    }
+//    @Bean
+//    MappingJackson2JsonView jsonView() {
+//        return new MappingJackson2JsonView();
+//    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:/WEB_INF/view/")
+//                .addResourceLocations("classpath:/WEB_INF/view/")
+                .addResourceLocations("classpath:/templates/")
                 .setCacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES));
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new ControllerInterceptor()).excludePathPatterns("/static/**", "/favicon.ico");
+//        registry.addInterceptor(new ControllerInterceptor()).excludePathPatterns("/static/**", "/favicon.ico");
     }
 
 

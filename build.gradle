@@ -10,8 +10,13 @@ repositories {
 
 dependencies {
 
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
     // jsp
-    implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
+//    implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
 
     // DB - mysql
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.12'
@@ -22,62 +27,19 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:2.5.12'
     implementation 'org.springframework.boot:spring-boot-starter-web-services:2.5.12'
     implementation 'org.springframework.boot:spring-boot-starter-security:2.5.12'
-
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter:2.5.12'
 
     implementation 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // 개발
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 description = 'practice'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
-
-/**
- * SpringBoot 프로젝트가 build 될 때 React 프로젝트가 먼저 build되고,
- * 결과물을 SpringBoot 프로젝트 build 결과물에 포함시킨다
- */
-
-def frontendDir = "$projectDir/src/main/frontend"
-
-sourceSets {
-    main {
-        resources { srcDirs = ["$projectDir/src/main/resources"]
-        }
-    }
-}
-
-processResources { dependsOn "copyReactBuildFiles" }
-
-task installReact(type: Exec) {
-    workingDir "$frontendDir"
-    inputs.dir "$frontendDir"
-    group = BasePlugin.BUILD_GROUP
-    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-        commandLine "npm.cmd", "audit", "fix"
-        commandLine 'npm.cmd', 'install' }
-    else {
-        commandLine "npm", "audit", "fix" commandLine 'npm', 'install'
-    }
-}
-
-task buildReact(type: Exec) {
-    dependsOn "installReact"
-    workingDir "$frontendDir"
-    inputs.dir "$frontendDir"
-    group = BasePlugin.BUILD_GROUP
-    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-        commandLine "npm.cmd", "run-script", "build"
-    } else {
-        commandLine "npm", "run-script", "build"
-    }
-}
-
-task copyReactBuildFiles(type: Copy) {
-    dependsOn "buildReact"
-    from "$frontendDir/build"
-    into "$projectDir/src/main/resources/static"
-}
 
 
