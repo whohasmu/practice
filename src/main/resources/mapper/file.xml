@@ -1,0 +1,58 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.practice.mapper.FileMapper">
+
+	<select id="getFileList" resultType="fileDto" parameterType="fileDto">
+		/* mapper.fileMapper.getFileList */
+
+		SELECT
+			A.idx
+			, A.board_idx
+			, A.saveFileNm
+			, A.origFileNm
+		FROM uploadfile A
+		<include refid="sqlWhere"/>
+
+	</select>
+
+<!--	<select id="getFileListCount" resultType="int" parameterType="boardDto">-->
+<!--		/* mapper.fileMapper.getboardListCount */-->
+<!--		SELECT -->
+<!--			COUNT(*)-->
+<!--		FROM uploadfile A-->
+<!--		<include refid="sqlWhere"/>-->
+<!--	</select>-->
+	
+	<sql id="sqlWhere">
+		<where>
+			<if test='boardIdx != null and !"".equals(boardIdx)'>
+				AND A.board_idx = #{boardIdx}
+			</if>
+		</where>
+	</sql>
+
+	<insert id="insertFile" parameterType="fileDto">
+		/* mapper.fileMapper.insertFile */
+		<selectKey keyProperty="idx" resultType="Integer" order="BEFORE">
+			select ifnull(max(idx) + 1, 1) from uploadFile
+		</selectKey>
+
+		INSERT into uploadFile (
+		    idx
+			, board_idx
+			, saveFileNm
+			, origFileNm
+		) values (
+			#{idx}
+			, #{boardIdx}
+			, #{saveFileNm}
+			, #{origFileNm}
+		)
+
+	</insert>
+
+
+	
+</mapper>

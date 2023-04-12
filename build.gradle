@@ -23,6 +23,10 @@ dependencies {
     implementation 'org.springframework:spring-jdbc'
     implementation 'mysql:mysql-connector-java'
 
+    // Mybatis
+//    implementation 'org.mybatis:mybatis:3.5.9'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
+
     // Springboot
     implementation 'org.springframework.boot:spring-boot-starter-web:2.5.12'
     implementation 'org.springframework.boot:spring-boot-starter-web-services:2.5.12'

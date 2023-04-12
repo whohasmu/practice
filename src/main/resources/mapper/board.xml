@@ -1,0 +1,126 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.practice.mapper.BoardMapper">
+
+	<sql id="pre-paginated-frag">
+		<![CDATA[
+		SELECT
+		    *
+	    FROM (
+			SELECT
+			    CEIL( ROWNUM / #{rowsPerPage} ) AS PAGEIDX
+			    , BASE.*
+			FROM (
+				SELECT
+				    row_number() over() AS ROWNUM
+					, A.*
+				FROM (
+	    ]]>
+	</sql>
+
+	<!-- page 공통 -->
+	<sql id="post-paginated-frag">
+		<![CDATA[
+				) A
+			) base
+			WHERE ROWNUM <= #{pageCalc}
+		) RST
+	    WHERE RST.PAGEIDX = #{pageIdx}
+		]]>
+	</sql>
+
+
+
+	<select id="getBoardList" resultType="boardDto" parameterType="boardDto">
+		/* mapper.boardmapper.getBoardList */
+		<if test="rowsPerPage != null and pageIdx != null and pageCalc != null">
+			<include refid="pre-paginated-frag" />
+		</if>
+
+		SELECT
+			b.idx
+			, b.code
+			, b.subject
+			, b.cont
+			, b.id
+		FROM board b
+		<include refid="getBoardListWhere"/>
+		order by b.idx asc
+
+		<if test="rowsPerPage != null and pageIdx != null and pageCalc != null">
+			<include refid="post-paginated-frag" />
+		</if>
+	</select>
+
+	<select id="getBoardListCount" resultType="int" parameterType="boardDto">
+		/* mapper.boardmapper.getboardListCount */
+		SELECT 
+			COUNT(*)
+		FROM board b
+		<include refid="getBoardListWhere"/>
+	</select>
+	
+	<sql id="getBoardListWhere">
+		<where>
+			<if test='keyword != null and !"".equals(keyword)'>
+				AND b.subject like concat('%',#{keyword},'%')
+			</if>
+
+		</where>
+	</sql>
+
+	<insert id="insertBoard" parameterType="boardDto">
+		/* mapper.boardmapper.insertBoard */
+		<selectKey keyProperty="idx" resultType="Integer" order="BEFORE">
+			select ifnull(max(idx) + 1, 1) from board
+		</selectKey>
+
+		INSERT into board (
+		    idx
+			, code
+			, subject
+			, cont
+			, id
+		) values (
+			#{idx}
+			, #{code}
+			, #{subject}
+			, #{cont}
+			, #{id}
+		)
+
+	</insert>
+
+
+	<select id="getBoardView" resultType="boardDto" parameterType="boardDto">
+		/* mapper.boardmapper.getBoardView */
+
+		SELECT
+			 b.idx
+			, b.code
+			, b.subject
+			, b.cont
+			, b.id
+		FROM board b
+		where b.idx = #{idx}
+
+
+	</select>
+
+	<update id="updateBoard" parameterType="boardDto">
+		/* mapper.boardmapper.updateBoard */
+
+		update board
+		set
+			code = #{code}
+			, subject = #{subject}
+			, cont = #{cont}
+		where
+		    idx = #{idx}
+
+	</update>
+
+	
+</mapper>

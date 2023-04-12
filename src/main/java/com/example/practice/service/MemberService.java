@@ -1,7 +1,7 @@
 package com.example.practice.service;
 
-import com.example.practice.DTO.TestVO;
-import com.example.practice.DTO.TokenInfo;
+import com.example.practice.dto.TestVO;
+import com.example.practice.dto.TokenInfo;
 import com.example.practice.config.JwtTokenProvider;
 import com.example.practice.entity.Member;
 import com.example.practice.entity.MemberRepository;

@@ -1,0 +1,129 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.practice.mapper.MenuMapper">
+
+	<select id="getMenuList" resultType="menuDto" parameterType="menuDto">
+		/* mapper.MenuMapper.getMenuList */
+
+		select
+			idx
+			 , p_idx
+			 , title
+			 , path_url
+			 , sort_order
+			 , icon
+			 , use_yn
+		from menu A
+		where
+			A.use_yn = 'Y'
+-- 		A.p_idx = 1
+
+		order by A.sort_order asc
+
+	</select>
+
+	<select id="getMenuMngList" resultType="menuDto" parameterType="menuDto">
+		/* mapper.MenuMapper.getMenuMngList */
+
+		select
+			idx
+			 , p_idx
+			 , title
+			 , path_url
+			 , sort_order
+			 , icon
+			 , use_yn
+		from menu A
+
+
+	</select>
+
+	<select id="getMenuDetail" resultType="menuDto" parameterType="menuDto">
+		/* mapper.MenuMapper.getMenuDetail */
+
+		SELECT
+			idx
+			 , p_idx
+			 , title
+			 , path_url
+			 , sort_order
+			 , icon
+			 , use_yn
+			 , reg_id
+			 , reg_dt
+		FROM menu
+		where idx = #{idx}
+
+
+	</select>
+
+	<insert id="insertMenu" parameterType="menuDto">
+		/* mapper.MenuMapper.insertMenu */
+		<selectKey keyProperty="idx" resultType="Integer" order="BEFORE">
+			select ifnull(max(idx) + 1, 1) from menu
+		</selectKey>
+
+		INSERT into menu (
+		    idx
+			, p_idx
+			, title
+			, path_url
+			, sort_order
+			, icon
+			, use_yn
+			, reg_id
+			, reg_dt
+		) values (
+			#{idx}
+			, #{pIdx}
+			, #{title}
+			, #{pathUrl}
+			, #{sortOrder}
+			, #{icon}
+			, #{useYn}
+		    ,'test'
+			, now()
+		)
+
+	</insert>
+
+
+
+
+	<update id="updateMenu" parameterType="menuDto">
+		/* mapper.MenuMapper.updateMenu */
+
+		update menu
+		set
+		  title = #{title}
+		  , path_url = #{pathUrl}
+		  , sort_order = #{sortOrder}
+		  , icon = #{icon}
+		  , use_yn = #{useYn}
+-- 		  , mod_id = #{regId}
+		  , mod_dt = now()
+		where
+		    idx = #{idx}
+
+	</update>
+
+	<update id="updateReSort" parameterType="sortDto">
+		/* mapper.MenuMapper.updateReSort */
+
+		update menu A,	(select idx
+		    				, p_idx
+		    				, row_number() over (order by sort_order asc) as rownum
+						from menu
+		    			where p_idx = #{pIdx}
+		    			) B
+		set A.sort_order = B.rownum
+		where
+		    A.idx = B.idx
+			and A.p_idx = #{pIdx}
+
+	</update>
+
+	
+</mapper>

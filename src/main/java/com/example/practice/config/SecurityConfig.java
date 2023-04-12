@@ -90,18 +90,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         //JWT
         http
+
                 .httpBasic().disable()
                 .csrf().disable()
+
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                     .authorizeRequests()
-//                    .antMatchers("/", "/login/**", "/js/**", "/css/**", "/image/**").permitAll()
+
+                    .antMatchers("/", "/login/**", "/js/**", "/css/**", "/image/**").permitAll()
                     .antMatchers("/**").permitAll()
+                .antMatchers("/**").permitAll()
 //                    .anyRequest().authenticated()
+
                 .and().exceptionHandling().accessDeniedPage("/login")
-                .and().exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .and().exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+
+//                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
     }
 

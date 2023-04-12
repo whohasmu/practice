@@ -1,0 +1,72 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.practice.mapper.SortMapper">
+
+	<select id="getSortList" resultType="sortDto" parameterType="sortDto">
+		/* mapper.sortMapper.getSortList */
+
+		SELECT
+			A.idx
+			, A.text
+			, A.ordd
+		FROM sort A
+		order by A.ordd
+
+	</select>
+
+	<update id="updateSort" parameterType="sortDto">
+		/* mapper.sortMapper.updateSort */
+		<choose>
+			<when test="ordd lt newOrdd">
+			/* lt!! */
+				update sort A
+				set ordd =
+					case
+						when ordd = #{ordd} then #{newOrdd}
+						else ordd - 1
+					end
+				where
+					A.ordd  between  #{ordd} and #{newOrdd}
+			</when>
+			<when test="ordd eq newOrdd">
+
+			</when>
+			<when test="ordd gt newOrdd">
+				/* gt!! */
+				update sort A
+				set ordd =
+					case
+						when ordd = #{ordd} then #{newOrdd}
+						else ordd + 1
+					end
+				where
+				A.ordd  between  #{newOrdd} and #{ordd}
+			</when>
+		</choose>
+
+
+
+
+
+
+
+
+
+	</update>
+
+	<update id="updateReSort" parameterType="sortDto">
+		/* mapper.sortMapper.updateReSort */
+
+		update sort A,	(select idx,text,ordd, row_number() over (order by ordd asc) as rownum
+			from sort ) B
+		set A.ordd = B.rownum
+		where A.idx = B.idx
+
+	</update>
+
+
+
+	
+</mapper>

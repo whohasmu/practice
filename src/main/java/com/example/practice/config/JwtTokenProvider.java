@@ -1,6 +1,6 @@
 package com.example.practice.config;
 
-import com.example.practice.DTO.TokenInfo;
+import com.example.practice.dto.TokenInfo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

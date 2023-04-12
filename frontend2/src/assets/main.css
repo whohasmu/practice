@@ -1,0 +1,74 @@
+
+#app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+}
+
+h1 {
+    color: #43b984;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.wrap {
+    width: 100%;
+}
+
+.v-main {
+    width: 80%;
+    margin: 0 auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+.btn {
+    padding: 10px;
+    background: #34445c;
+    color: #fff;
+}
+
+/* header */
+/*header{width:100%; text-align:center; position:relative; height:120px; border-bottom:1px solid #35495e}
+header h1{position:absolute; top:0; left:100px;}
+header ul.menu:after{display:block; clear:both; content:'';}
+header ul.menu{position:absolute; top:20px; right:50px;}
+header ul.menu li{float:left; padding:10px 20px; list-style:none;}
+
+header a{text-decoration:none; color:#333;}*/
+
+/* footer */
+footer{border-top:1px solid #35495e; text-align:center; font-size:16px; color:#41b883; margin:100px 0 0 0;}
+
+/* board List */
+.searchWrap{border:1px solid #888; border-radius:5px; text-align:center; padding:20px 0; margin-bottom:40px;}
+.searchWrap input{width:60%; height:36px; border-radius:3px; padding:0 10px; border:1px solid #888;}
+.searchWrap .btnSearch{display:inline-block; margin-left:10px;}
+.tbList th{border-top:1px solid #888;}
+.tbList th, .tbList td{border-bottom:1px solid #eee; padding:5px 0;}
+.tbList td.txt_left{text-align:left;}
+.btnRightWrap{text-align:right; margin:10px 0 0 0;}
+
+.pagination{margin:20px 0 0 0; text-align:center;}
+.first, .prev, .next, .last{border:1px solid #666; margin:0 5px;}
+.pagination span{display:inline-block; padding:0 5px; color:#333;}
+.pagination a{text-decoration:none; display:inline-blcok; padding:0 5px; color:#666;}
+
+/* board View */
+.tbAdd{border-top:1px solid #888;}
+.tbAdd th, .tbAdd td{border-bottom:1px solid #eee; padding:5px 0;}
+.tbAdd td{padding:10px 10px; box-sizing:border-box;}
+.tbAdd td input{width:100%; min-height:30px; box-sizing:border-box; padding:0 10px;}
+.tbAdd td textarea{width:100%; min-height:300px; padding:10px; box-sizing:border-box;}
+.btnWrap{text-align:center; margin:20px 0 0 0;}
+.btnWrap a{margin:0 10px;}
+.btnAdd {background:#43b984}
+.btnDelete{background:#f00;}

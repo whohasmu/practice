@@ -1,7 +1,7 @@
 package com.example.practice.controller;
 
-import com.example.practice.DTO.TestVO;
-import com.example.practice.DTO.TokenInfo;
+import com.example.practice.dto.TestVO;
+import com.example.practice.dto.TokenInfo;
 import com.example.practice.service.MemberService;
 import com.example.practice.validate.SampleValidates;
 import lombok.extern.slf4j.Slf4j;

@@ -1,34 +1,38 @@
-package com.example.practice.config;
-
-import com.example.practice.DTO.ApiResponse;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.core.env.Profiles;
-import org.springframework.stereotype.Component;
-
-import javax.servlet.http.HttpServletRequest;
-
-
+//package com.example.practice.config;
+//
+//
+//import com.example.practice.dto.ApiResponse;
+//import com.fasterxml.jackson.annotation.JsonInclude;
+//import com.fasterxml.jackson.databind.DeserializationFeature;
+//import com.fasterxml.jackson.databind.ObjectMapper;
+//import lombok.extern.slf4j.Slf4j;
+//
+//import org.aspectj.lang.JoinPoint;
+//import org.aspectj.lang.annotation.AfterReturning;
+//import org.aspectj.lang.annotation.Aspect;
+//import org.aspectj.lang.annotation.Before;
+//import org.aspectj.lang.annotation.Pointcut;
+//import org.aspectj.lang.reflect.MethodSignature;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.core.env.Environment;
+//import org.springframework.core.env.Profiles;
+//import org.springframework.stereotype.Component;
+//
+//import javax.servlet.http.HttpServletRequest;
+//
 //@Slf4j
 //@Aspect
 //@Component
-public class ControllerRequestLogAspect {
+//public class ControllerRequestLogAspect {
 //
 //    @Autowired(required = false)
 //    private HttpServletRequest request;
 //
 //    @Autowired
 //    private Environment environment;
+//
+//    public ControllerRequestLogAspect() {
+//    }
 //
 //    @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping) ||"
 //            + "@annotation(org.springframework.web.bind.annotation.GetMapping) ||"
@@ -48,9 +52,9 @@ public class ControllerRequestLogAspect {
 //                    log.debug("no parameter");
 //                } else {
 //                    for (Object arg : args) {
-////                        log.debug("parameter type = {}", arg.getClass().getSimpleName());
-//                        //log.debug("parameter : {}", arg);
-//                        log.debug("parameter : {}", convertLogStr(arg));
+//                        log.debug("parameter type = {}", arg.getClass().getSimpleName());
+//                        log.debug("parameter : {}", arg);
+////                        log.debug("parameter : {}", convertLogStr(arg));
 //                    }
 //                }
 //                log.debug("[REQUEST]<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -117,5 +121,5 @@ public class ControllerRequestLogAspect {
 //        }
 //        return result;
 //    }
-
-}
+//
+//}
